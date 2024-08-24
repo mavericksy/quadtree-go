@@ -17,6 +17,7 @@ type Bounds struct {
 	Y      float64
 	Width  float64
 	Height float64
+	Data   any
 }
 
 //IsPoint - Checks if a bounds object is a point or not (has no width or height)

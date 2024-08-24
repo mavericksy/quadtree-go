@@ -48,7 +48,7 @@ func TestTotalSubnodes(t *testing.T) {
 
 func TestQuadtreeInsert(t *testing.T) {
 
-	rand.Seed(time.Now().UTC().UnixNano()) // Seed Random properly
+	//rand.Seed(time.Now().UTC().UnixNano()) // Seed Random properly
 
 	qt := setupQuadtree(0, 0, 640, 480)
 
@@ -256,7 +256,7 @@ func TestQuadtreeRandomPointRetrieval(t *testing.T) {
 	}
 
 	if failure == false {
-		t.Logf("Success: All the points were retrieved correctly", iterations, numObjects)
+		t.Logf("Success: All the points were retrieved correctly %d %d", iterations, numObjects)
 	}
 
 }
@@ -300,7 +300,7 @@ func TestIntersectionRetrieval(t *testing.T) {
 
 func TestQuadtreeClear(t *testing.T) {
 
-	rand.Seed(time.Now().UTC().UnixNano()) // Seed Random properly
+	//rand.Seed(time.Now().UTC().UnixNano()) // Seed Random properly
 
 	qt := setupQuadtree(0, 0, 640, 480)
 
@@ -339,6 +339,39 @@ func TestQuadtreeClear(t *testing.T) {
 		t.Logf("Success: The Quadtree was cleared correctly")
 	}
 
+}
+
+func TestBoundsWithData(t *testing.T) {
+	qt := setupQuadtree(0, 0, 640, 480)
+	qt.Insert(Bounds{
+		X:      1,
+		Y:      1,
+		Width:  10,
+		Height: 10,
+		Data:   "Howdy",
+	})
+	qt.Insert(Bounds{
+		X:      5,
+		Y:      5,
+		Width:  10,
+		Height: 10,
+		Data:   21,
+	})
+	inter := qt.RetrieveIntersections(Bounds{
+		X:      5,
+		Y:      5,
+		Width:  2.5,
+		Height: 2.5,
+	})
+	if len(inter) != 2 {
+		t.Error("Should have two intersections")
+	}
+	if inter[0].Data.(string) != "Howdy" {
+		t.Error("Data should be saved on bounds")
+	}
+	if inter[1].Data.(int) != 21 {
+		t.Error("Data should be saved on bounds")
+	}
 }
 
 // Benchmarks
