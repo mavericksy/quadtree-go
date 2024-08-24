@@ -1,4 +1,4 @@
-package quadtree
+package main
 
 // Quadtree - The quadtree data structure
 type Quadtree struct {

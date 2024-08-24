@@ -1,4 +1,4 @@
-package quadtree
+package main
 
 import (
 	"math/rand"
